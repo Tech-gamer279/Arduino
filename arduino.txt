@@ -1,0 +1,42 @@
+// Arduino code for a line following robot with one IR sensor
+// Assumes sensor is connected to A0, motors to pins 9-12
+// Adjust threshold based on your sensor readings
+
+int sensorPin = A0;
+int leftMotorPin1 = 9;  // Left motor forward
+int leftMotorPin2 = 10; // Left motor backward
+int rightMotorPin1 = 11; // Right motor forward
+int rightMotorPin2 = 12; // Right motor backward
+int threshold = 500; // Sensor threshold for line detection
+
+// Uses one arduino IR SENSOR
+
+void setup() {
+  pinMode(sensorPin, INPUT);
+  pinMode(leftMotorPin1, OUTPUT);
+  pinMode(leftMotorPin2, OUTPUT);
+  pinMode(rightMotorPin1, OUTPUT);
+  pinMode(rightMotorPin2, OUTPUT);
+
+  // TO RIGHT MOTOR pin
+}
+
+void loop() {
+  int sensorValue = analogRead(sensorPin);
+  
+  if (sensorValue > threshold) {
+    // On the line, go forward
+    digitalWrite(leftMotorPin1, HIGH);
+    digitalWrite(leftMotorPin2, LOW);
+    digitalWrite(rightMotorPin1, HIGH);
+    digitalWrite(rightMotorPin2, LOW);
+  } else {
+    // Off the line, turn right to find the line
+    digitalWrite(leftMotorPin1, HIGH);
+    digitalWrite(leftMotorPin2, LOW);
+    digitalWrite(rightMotorPin1, LOW);
+    digitalWrite(rightMotorPin2, HIGH);
+  }
+  
+  delay(10); // Small delay for stability
+}
